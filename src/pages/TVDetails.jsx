@@ -167,7 +167,6 @@ function TVDetails() {
 									</div>
 								</div>
 							)}
-							
 						</div>
 					</div>
 					{data.seasons && (
@@ -175,7 +174,7 @@ function TVDetails() {
 							<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
 								Seasons
 							</h2>
-							<div className="flex flex-wrap">
+							<div className="flex flex-wrap mx-auto">
 								{data.seasons.map((season) => (
 									<Link
 										to={`/tv/${TVId}/season/${season.season_number}/${seasonsSubtract}`}
