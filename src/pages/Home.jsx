@@ -60,7 +60,10 @@ function Home() {
 	return (
 		<>
 			<Navbar />
-			<form onSubmit={handleSubmit} className="w-1/2 mx-auto p-10">
+			<form
+				onSubmit={handleSubmit}
+				className="lg:w-1/2 md:w-3/4 sm:w-5/6 mx-auto p-10"
+			>
 				<label
 					htmlFor="default-search"
 					className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
