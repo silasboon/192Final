@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchResults from "../components/SearchResults";
 import PopularMovies from "../components/PopularMovies";
 import PopularTV from "../components/PopularTV";
@@ -7,9 +7,9 @@ import FooterComponent from "../components/FooterComponent";
 
 function Home() {
 	// states
-	const [data, setData] = useState(null);
+	const [movieData, setMovieData] = useState(null);
+	const [tvData, setTvData] = useState(null);
 	const [search, setSearch] = useState("");
-	const [inputValue, setInputValue] = useState("");
 	// API key
 	const MOVIEAPIKEY = "08d85f47ee3b13f3aee2110785af86fa";
 
@@ -17,6 +17,7 @@ function Home() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		getMovie();
+		getTv();
 	};
 
 	// fetch data from API
@@ -34,7 +35,23 @@ function Home() {
 			);
 			const data = await response.json();
 			const results = data.results;
-			setData(data);
+			setMovieData(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+	const getTv = async () => {
+		try {
+			const response = await fetch(
+				"https://api.themoviedb.org/3/search/tv?api_key=" +
+					MOVIEAPIKEY +
+					"&query=" +
+					search,
+				options
+			);
+			const data = await response.json();
+			const results = data.results;
+			setTvData(data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -91,7 +108,7 @@ function Home() {
 					<PopularMovies /> <PopularTV />
 				</>
 			) : (
-				<SearchResults data={data} />
+				<SearchResults movies={movieData} tv={tvData} />
 			)}
 			<FooterComponent />
 		</>

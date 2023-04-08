@@ -11,9 +11,9 @@ function PopularTV() {
 	const getRecommended = async () => {
 		try {
 			const response = await fetch(
-				"https://api.themoviedb.org/3/tv/popular?api_key=" +
+				"https://api.themoviedb.org/3/discover/tv?api_key=" +
 					MOVIEAPIKEY +
-					"&language=en-US&page=1",
+					"&language=en-CA&page=1&timezone=America%2FLos_Angeles&with_original_language=en&watch_region=CA",
 				options
 			);
 			const data = await response.json();

@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import FooterComponent from "../components/FooterComponent";
+import StarRatings from "react-star-ratings";
+
 function Details() {
 	const { movieId } = useParams();
 	const [data, setData] = useState({});
@@ -10,6 +12,7 @@ function Details() {
 	const [trailer, setTrailer] = useState([]);
 	const [featurette, setFeaturette] = useState([]);
 	const [url, setURL] = useState("");
+	const [votes, setVotes] = useState(0);
 
 	const MOVIEAPIKEY = "08d85f47ee3b13f3aee2110785af86fa";
 	const options = {
@@ -27,6 +30,8 @@ function Details() {
 			);
 			const data = await response.json();
 			setData(data);
+			// convert votes to /5 not /10
+			setVotes(data.vote_average / 2);
 		} catch (error) {
 			console.log(error);
 		}
@@ -109,10 +114,15 @@ function Details() {
 							{data.title}
 						</h1>
 						<div className="flex flex-wrap items-center mb-4">
-							<span className="mr-4 text-gray-700 dark:text-white">
-								{data.vote_average}/10
-							</span>
-							<span className="mr-4 text-gray-700 dark:text-white">
+							<StarRatings
+								rating={votes}
+								starRatedColor="#FBBF24"
+								numberOfStars={5}
+								name="rating"
+								starDimension="20px"
+								starSpacing="1px"
+							/>
+							<span className="mr-4 ml-4 text-gray-700 dark:text-white">
 								{data.release_date}
 							</span>
 							{data.genres && (
@@ -158,25 +168,6 @@ function Details() {
 												)}
 												<span className="text-lg text-gray-800 dark:text-white">
 													{company.name}
-												</span>
-											</div>
-										))}
-									</div>
-								</div>
-							)}
-							{data.spoken_languages && (
-								<div className="mb-4">
-									<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-										Spoken Languages
-									</h2>
-									<div className="flex flex-wrap">
-										{data.spoken_languages.map((language) => (
-											<div
-												key={language.iso_639_1}
-												className="mr-4 mb-4 flex items-center"
-											>
-												<span className="text-lg text-gray-800 dark:text-white">
-													{language.english_name}
 												</span>
 											</div>
 										))}
