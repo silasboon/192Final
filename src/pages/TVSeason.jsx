@@ -25,7 +25,6 @@ const TVSeason = () => {
 			);
 			const data = await response.json();
 			setData(data);
-			console.log(data);
 			setEpisodeNumber(data.seasons[seasonNumber].episode_count);
 		} catch (error) {
 			console.log(error);
@@ -86,35 +85,57 @@ const TVSeason = () => {
 
 	const getVideoList = () => {
 		let videoList = [];
+		const [scrollPosition, setScrollPosition] = useState(0);
+		// gradient effect on left and right of video list
+		const handleScroll = (event) => {
+			const { scrollLeft, scrollWidth, clientWidth } = event.target;
+			const maxScrollLeft = scrollWidth - clientWidth;
+			const newScrollPosition = scrollLeft / maxScrollLeft;
+			setScrollPosition(newScrollPosition);
+		};
+		const gradientLeft = `linear-gradient(to right, rgb(16,23,41), rgb(16,23,41) ${
+			(1 - scrollPosition) * 100
+		}%, rgb(16,23,41), rgba(255, 255, 255, 0))`;
+		const gradientRight = `linear-gradient(to left, rgb(16,23,41), rgb(16,23,41) ${
+			scrollPosition * 100
+		}%, rgb(16,23,41), rgba(255, 255, 255, 0))`;
 		if (videoData && videoData.results) {
 			for (let i = 0; i < videoData.results.length; i++) {
 				videoList.push(videoData.results[i].key);
 			}
 		}
 		return (
-			<div>
-				<h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+			<>
+				<h3 className="text-2xl font-semibold text-gray-700 dark:text-white mt-5">
 					Videos
-				</h2>
-				{videoList.length === 0 && <p>No videos found</p>}
-				{videoList.map((video) => {
-					return (
-						<div key={video}>
-							<h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-								{video.name}
-							</h3>
-							<iframe
-								width="560"
-								height="315"
-								src={`https://www.youtube.com/embed/${video}`}
-								title={video}
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen
-							></iframe>
-						</div>
-					);
-				})}
-			</div>
+				</h3>
+				<div className="relative mx-auto my-5">
+					<div
+						className="absolute top-0 bottom-0 left-0 w-8"
+						style={{ backgroundImage: `${gradientLeft}` }}
+					/>
+					<div
+						className="absolute top-0 left--20 bottom-0 right-0 w-8"
+						style={{ backgroundImage: `${gradientRight}` }}
+					/>
+					<div className="flex overflow-x-scroll mx-4" onScroll={handleScroll}>
+						{videoList.map((vid) => {
+							return (
+								<div key={vid} className="flex-none mx-4">
+									<iframe
+										width="560"
+										height="315"
+										src={`https://www.youtube.com/embed/${vid}`}
+										title={videoData}
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowFullScreen
+									></iframe>
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			</>
 		);
 	};
 

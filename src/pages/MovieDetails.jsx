@@ -9,9 +9,6 @@ function Details() {
 	const { movieId } = useParams();
 	const [data, setData] = useState({});
 	const [video, setVideo] = useState([]);
-	const [trailer, setTrailer] = useState([]);
-	const [featurette, setFeaturette] = useState([]);
-	const [url, setURL] = useState("");
 	const [votes, setVotes] = useState(0);
 
 	const MOVIEAPIKEY = "08d85f47ee3b13f3aee2110785af86fa";
@@ -43,7 +40,7 @@ function Details() {
 				options
 			);
 			const video = await response.json();
-			setVideo(video.results);
+			setVideo(video);
 		} catch (error) {
 			console.log(error);
 		}
@@ -54,22 +51,38 @@ function Details() {
 		getVideo();
 	}, [movieId]);
 
-	useEffect(() => {
-		video.map((video) => {
-			if (video.type == "Trailer") {
-				setTrailer(video.key);
-			} else if (video.type == "Featurette") {
-				setFeaturette(video.key);
+	const getVideoList = () => {
+		let videoList = [];
+		if (video && video.results) {
+			for (let i = 0; i < video.results.length; i++) {
+				videoList.push(video.results[i].key);
 			}
-		});
-	}, [video]);
-
-	useEffect(() => {
-		if (trailer != "" || featurette != "") {
-			setURL("https://www.youtube.com/embed/" + trailer);
-			console.log("Featurette: " + featurette);
 		}
-	}, [trailer, featurette]);
+
+		return (
+			<>
+				<h3 className="text-2xl font-semibold text-gray-700 dark:text-white mt-5">
+					Videos
+				</h3>
+				<div className="flex overflow-x-scroll mx-auto my-5">
+					{videoList.map((vid) => {
+						return (
+							<div key={vid} className="flex-none mr-4">
+								<iframe
+									width="560"
+									height="315"
+									src={`https://www.youtube.com/embed/${vid}`}
+									title={video}
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowFullScreen
+								></iframe>
+							</div>
+						);
+					})}
+				</div>
+			</>
+		);
+	};
 
 	return (
 		<>
@@ -176,17 +189,7 @@ function Details() {
 							)}
 						</div>
 					</div>
-					<div>
-						<iframe
-							width="560"
-							height="315"
-							src={url}
-							title="YouTube video player"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen
-						></iframe>
-					</div>
+					{getVideoList()}
 				</div>
 			</div>
 			<FooterComponent />

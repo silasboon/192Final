@@ -64,6 +64,15 @@ function TVDetails() {
 		getTvImages();
 	}, [TVId]);
 
+	const handleClick = (e) => {
+		// copy string to clipboard
+		// prevent default behaviour
+		e.preventDefault();
+		const textToCopy = `${data.original_name} S${data.last_episode_to_air.season_number}E${data.last_episode_to_air.episode_number}`;
+
+		navigator.clipboard.writeText(textToCopy);
+	};
+
 	return (
 		<>
 			<Navbar />
@@ -116,7 +125,7 @@ function TVDetails() {
 								starSpacing="1px"
 							/>
 							<span className="m-4 text-gray-700 dark:text-white">
-								{data.first_air_date}
+								{data.first_air_date ? data.first_air_date.substring(0, 4) : ""}
 							</span>
 							{data.genres && (
 								<div className="flex flex-wrap">
@@ -168,9 +177,70 @@ function TVDetails() {
 								</div>
 							)}
 						</div>
+						<div className="flex flex-wrap">
+							<div className="w-full md:w-1/2 mb-4 md:mb-0">
+								<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+									Previous Episode:
+								</h2>
+								{data.next_episode_to_air ? (
+									<div className="flex flex-wrap">
+										<div className="mr-4"></div>
+										<div className="flex flex-col">
+											<span className="font-bold text-gray-700 dark:text-white">
+												{data.last_episode_to_air.name}
+											</span>
+											<span className="italic text-gray-700 dark:text-white">
+												{data.last_episode_to_air.air_date}
+											</span>
+											<span
+												className="text-gray-700 dark:text-white"
+												title="Click to copy"
+												onClick={handleClick}
+												style={{ cursor: "pointer" }}
+											>
+												{data.original_name} S
+												{data.last_episode_to_air.season_number}E
+												{data.last_episode_to_air.episode_number}
+											</span>
+										</div>
+									</div>
+								) : (
+									<span className="text-gray-700 dark:text-white">
+										No previous episode data
+									</span>
+								)}
+							</div>
+							<div className="w-full md:w-1/2">
+								<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
+									Next Episode:
+								</h2>
+								{data.next_episode_to_air ? (
+									<div className="flex flex-wrap">
+										<div className="mr-4"></div>
+										<div className="flex flex-col">
+											<span className="font-bold text-gray-700 dark:text-white">
+												{data.next_episode_to_air.name}
+											</span>
+											<span className="italic text-gray-700 dark:text-white">
+												{data.next_episode_to_air.air_date}
+											</span>
+											<span className="text-gray-700 dark:text-white">
+												{data.original_name} S
+												{data.next_episode_to_air.season_number}E
+												{data.next_episode_to_air.episode_number}
+											</span>
+										</div>
+									</div>
+								) : (
+									<span className="text-gray-700 dark:text-white">
+										No upcoming episodes
+									</span>
+								)}
+							</div>
+						</div>
 					</div>
 					{data.seasons && (
-						<div className="mb-4 mx-auto">
+						<div className="mb-4">
 							<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
 								Seasons
 							</h2>
@@ -201,41 +271,6 @@ function TVDetails() {
 								))}
 							</div>
 						</div>
-					)}
-				</div>
-				<div>
-					<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-						Next Episode:
-					</h2>
-					{data.next_episode_to_air ? (
-						<div className="flex flex-wrap w-2/6">
-							<div className="mr-4"></div>
-							<div className="flex flex-col">
-								<span className=" font-bold text-gray-700 dark:text-white">
-									{data.next_episode_to_air.name}
-								</span>
-								<span className="italic text-gray-700 dark:text-white">
-									{data.next_episode_to_air.air_date}
-								</span>
-								<span className="text-gray-700 dark:text-white">
-									S{data.next_episode_to_air.season_number}E
-									{data.next_episode_to_air.episode_number}
-								</span>
-								{data.next_episode_to_air.overview ? (
-									<span className="text-gray-700 dark:text-white">
-										{data.next_episode_to_air.overview}
-									</span>
-								) : (
-									<span className="text-gray-700 dark:text-white">
-										No overview available
-									</span>
-								)}
-							</div>
-						</div>
-					) : (
-						<span className="text-gray-700 dark:text-white">
-							No upcoming episodes
-						</span>
 					)}
 				</div>
 			</div>
