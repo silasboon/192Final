@@ -115,7 +115,7 @@ function TVDetails() {
 								starDimension="20px"
 								starSpacing="1px"
 							/>
-							<span className="mr-4 ml-4 text-gray-700 dark:text-white">
+							<span className="m-4 text-gray-700 dark:text-white">
 								{data.first_air_date}
 							</span>
 							{data.genres && (
@@ -170,11 +170,11 @@ function TVDetails() {
 						</div>
 					</div>
 					{data.seasons && (
-						<div className="mb-4">
+						<div className="mb-4 mx-auto">
 							<h2 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
 								Seasons
 							</h2>
-							<div className="flex flex-wrap mx-auto">
+							<div className="flex flex-wrap">
 								{data.seasons.map((season) => (
 									<Link
 										to={`/tv/${TVId}/season/${season.season_number}/${seasonsSubtract}`}
