@@ -10,7 +10,14 @@ const Navbar = () => {
 							Movies & TV
 						</a>
 					</div>
-					<div className="hidden md:block"></div>
+					<div className=" flex justify-end flex-1">
+						<button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 mx-3 rounded-full">
+							Login
+						</button>
+						<button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4  rounded-full">
+							Signup
+						</button>
+					</div>
 				</div>
 			</div>
 		</nav>
