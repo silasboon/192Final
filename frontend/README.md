@@ -1,5 +1,9 @@
 # ITAS 192 Final Project
 
+## View Live Demo
+[Demo](http://165.22.12.9:5173)
+- Login and register is working, feel free to make an account (although it adds no extra functionality than accessing the 'accounts' page)
+
 ## Backstory
 
 I have used a service called Next Episode for the past few years as a means to track current TV shows so I can update my Plex library on time and keep track of the shows I love. I bought a one time license for the service through their mobile app. However, they recently changed their licensing model and the web app is a totally different subscription without a lifetime lisence. So, i have decided to make my own version of the app.
