@@ -8,6 +8,11 @@
 
 I have used a service called Next Episode for the past few years as a means to track current TV shows so I can update my Plex library on time and keep track of the shows I love. I bought a one time license for the service through their mobile app. However, they recently changed their licensing model and the web app is a totally different subscription without a lifetime lisence. So, i have decided to make my own version of the app.
 
+## API's 
+
+In this project I was planning to use [The Movie Database](https://www.themoviedb.org) and [The TV Database](https://thetvdb.com). After starting off with TMDB I realized it also contained all the required endpoints for accessing TV information. As a second API call I created my own simple login / register API using Node.JS
+I have this API hosted in a Digital Ocean droplet along with a managed PostgreSQL database. 
+
 ## Further Content/Features
 
 As it stands right now, this version of the app is far from complete. I would like to see the following features added in the future:
