@@ -1,13 +1,12 @@
 # ITAS 192 Final Project
 
 ## View Live Demo
-[Demo](http://165.22.12.9:5173)
+[Demo](http://165.22.12.9)
 - Login and register is working, feel free to make an account (although it adds no extra functionality than accessing the 'accounts' page)
 
 ## Backstory
 
 I have used a service called Next Episode for the past few years as a means to track current TV shows so I can update my Plex library on time and keep track of the shows I love. I bought a one time license for the service through their mobile app. However, they recently changed their licensing model and the web app is a totally different subscription without a lifetime lisence. So, i have decided to make my own version of the app.
-
 ## API's 
 
 In this project I was planning to use [The Movie Database](https://www.themoviedb.org) and [The TV Database](https://thetvdb.com). After starting off with TMDB I realized it also contained all the required endpoints for accessing TV information. As a second API call I created my own simple login / register API using Node.JS
@@ -26,6 +25,7 @@ As it stands right now, this version of the app is far from complete. I would li
 - Links to download _Totally Legal Linux distros_ using URL params. (currently clicking on the shows previous episode name and season number will copy it to the clipboard)
 - Having a list of unwatched episodes for each show stored in the watchlist that can be individually marked as watched
 - Move all API calls to the backend and have the frontend make calls to the backend
+- Add error handling for incorrect login information
 
 ## Sources
 
