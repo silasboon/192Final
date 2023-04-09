@@ -10,8 +10,19 @@ function Details() {
 	const [data, setData] = useState({});
 	const [video, setVideo] = useState([]);
 	const [votes, setVotes] = useState(0);
+	const [isAuth, setIsAuth] = useState(false);
 
 	const MOVIEAPIKEY = "08d85f47ee3b13f3aee2110785af86fa";
+
+	const isLoggedIn = () => {
+		const token = localStorage.getItem("token");
+		return !!token; // return true if token exists, false otherwise
+	};
+
+	useEffect(() => {
+		setIsAuth(isLoggedIn());
+	}, []);
+
 	const options = {
 		method: "GET",
 	};
@@ -86,7 +97,7 @@ function Details() {
 
 	return (
 		<>
-			<Navbar />
+			<Navbar isAuth={isAuth} />
 			<div className="container mx-auto px-4">
 				<Link
 					to={`/`}

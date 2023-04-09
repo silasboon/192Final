@@ -10,8 +10,18 @@ function Home() {
 	const [movieData, setMovieData] = useState(null);
 	const [tvData, setTvData] = useState(null);
 	const [search, setSearch] = useState("");
+	const [isAuth, setIsAuth] = useState(false);
 	// API key
 	const MOVIEAPIKEY = "08d85f47ee3b13f3aee2110785af86fa";
+
+	const isLoggedIn = () => {
+		const token = localStorage.getItem("token");
+		return !!token; // return true if token exists, false otherwise
+	};
+
+	useEffect(() => {
+		setIsAuth(isLoggedIn());
+	}, []);
 
 	// prevent defautl form submission behavior
 	const handleSubmit = (e) => {
@@ -59,7 +69,7 @@ function Home() {
 
 	return (
 		<>
-			<Navbar />
+			<Navbar isAuth={isAuth} />
 			<form
 				onSubmit={handleSubmit}
 				className="lg:w-1/2 md:w-3/4 sm:w-5/6 mx-auto p-10"
@@ -113,6 +123,7 @@ function Home() {
 			) : (
 				<SearchResults movies={movieData} tv={tvData} />
 			)}
+
 			<FooterComponent />
 		</>
 	);

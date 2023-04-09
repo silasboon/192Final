@@ -5,6 +5,9 @@ import TVDetails from "./pages/TVDetails";
 import TVSeason from "./pages/TVSeason";
 import EpisodeDetails from "./pages/EpisodeDetails";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Account from "./pages/Account";
 
 function App() {
 	return (
@@ -20,6 +23,9 @@ function App() {
 				path="/tv/:TVId/season/:seasonNumber/:seasonSubtract/episode/:episodeNumber"
 				element={<EpisodeDetails />}
 			/>
+			<Route path="/login" element={<Login />} />
+			<Route path="/register" element={<Register />} />
+			<Route path="/account" element={<Account />} />
 		</Routes>
 	);
 }

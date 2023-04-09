@@ -1,16 +1,17 @@
-import React from "react";
 import { Label, TextInput, Button } from "flowbite-react";
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import React from "react";
 import { useState, useEffect } from "react";
 
-const Login = () => {
-	const [email, setEmail] = useState("");
+const Register = () => {
 	const [password, setPassword] = useState("");
+	const [passwordConfirm, setPasswordConfirm] = useState("");
+	const [email, setEmail] = useState("");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		LoginUser();
+		RegisterUser();
 	};
 
 	const isLoggedIn = () => {
@@ -24,9 +25,9 @@ const Login = () => {
 		}
 	}, []);
 
-	const LoginUser = async () => {
+	const RegisterUser = async () => {
 		try {
-			const response = await fetch("http://localhost:5003/login", {
+			const response = await fetch("http://localhost:5003/register", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -37,13 +38,7 @@ const Login = () => {
 				}),
 			});
 			const data = await response.json();
-			if (data.token) {
-				localStorage.setItem("token", data.token); // Save token to local storage
-				// Redirect to the dashboard or home page
-				window.location.href = "/";
-			} else {
-				console.log(data.message); // Display error message
-			}
+			console.log(data);
 		} catch (error) {
 			console.log(error);
 		}
@@ -54,7 +49,7 @@ const Login = () => {
 			<Navbar />
 			<div className="w-4/6 mx-auto mt-10">
 				<h1 className="text-4xl font-bold text-center text-gray-800 dark:text-white">
-					Login
+					Register
 				</h1>
 				<form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 					<div>
@@ -82,28 +77,58 @@ const Login = () => {
 							onChange={(e) => {
 								setPassword(e.target.value);
 							}}
+							color={
+								password === passwordConfirm && password !== ""
+									? "success"
+									: "failure"
+							}
 							helperText={
 								<React.Fragment>
-									Don't have an account?{" "}
-									<Link to="/register">
-										<a
-											href="/register"
-											className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-										>
-											Register here
-										</a>
-									</Link>
-									.
+									{password === passwordConfirm && password !== ""
+										? "Passwords match"
+										: "Passwords do not match"}
+								</React.Fragment>
+							}
+						/>
+					</div>
+					<div>
+						<div className="mb-2 block">
+							<Label htmlFor="passwordConfirm" value="Confirm password" />
+						</div>
+						<TextInput
+							id="passwordConfirm"
+							type="password"
+							required={true}
+							onChange={(e) => {
+								setPasswordConfirm(e.target.value);
+							}}
+							color={
+								password === passwordConfirm && password !== ""
+									? "success"
+									: "failure"
+							}
+							helperText={
+								<React.Fragment>
+									{password === passwordConfirm && password !== ""
+										? "Passwords match"
+										: "Passwords do not match"}
 								</React.Fragment>
 							}
 						/>
 					</div>
 
-					<Button type="submit">Submit</Button>
+					<Button
+						type="submit"
+						disabled={
+							password === passwordConfirm && password !== "" ? false : true
+						}
+					>
+						Register
+					</Button>
 				</form>
 			</div>
 		</>
 	);
 };
 
-export default Login;
+export default Register;
