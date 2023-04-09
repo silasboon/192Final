@@ -16,6 +16,7 @@ As it stands right now, this version of the app is far from complete. I would li
 - integration with IMDB or similar platform to get more information about the show/movie (overall I am not a huge fan of TMDB)
 - Links to download _Totally Legal Linux distros_ using URL params. (currently clicking on the shows previous episode name and season number will copy it to the clipboard)
 - Having a list of unwatched episodes for each show stored in the watchlist that can be individually marked as watched
+- Move all API calls to the backend and have the frontend make calls to the backend
 
 ## Sources
 
