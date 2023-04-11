@@ -75,15 +75,6 @@ function TVDetails() {
 		getTvImages();
 	}, [TVId]);
 
-	const handleClick = (e) => {
-		// copy string to clipboard
-		// prevent default behaviour
-		e.preventDefault();
-		const textToCopy = `${data.original_name} S${data.last_episode_to_air.season_number}E${data.last_episode_to_air.episode_number}`;
-
-		navigator.clipboard.writeText(textToCopy);
-	};
-
 	return (
 		<>
 			<Navbar isAuth={isAuth} />
@@ -206,8 +197,6 @@ function TVDetails() {
 											<span
 												className="text-gray-700 dark:text-white"
 												title="Click to copy"
-												onClick={handleClick}
-												style={{ cursor: "pointer" }}
 											>
 												{data.original_name} S
 												{data.last_episode_to_air.season_number}E
